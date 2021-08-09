@@ -1,0 +1,88 @@
+@use "sass:math";
+/*Variables**/
+$fuente-tipica: sans-serif, Helvetica, Arial;
+$color-fondo: #ccc;
+$color-fuente: green;
+$color-fuente-secondary: yellow;
+
+body {
+  background-color: $color-fondo;
+  h1 {
+    font-family: $fuente-tipica;
+    //color: $color-fuente;
+  }
+}
+
+/*anidacion*/
+.caja {
+  input {
+    color: $color-fuente-secondary;
+    &:focus {
+      color: $color-fuente;
+    }
+  }
+  p {
+    color: $color-fuente;
+  }
+}
+
+//mixins
+@mixin crearBorder($color, $size, $shadow) {
+  border: $size solid $color;
+  border-radius: $size;
+  box-shadow: 0px 0px 5px $shadow;
+}
+
+.caja {
+  @include crearBorder(red, 10px, black);
+}
+
+.listado {
+  @include crearBorder(green, 20px, yellow);
+}
+
+//herencia
+%alert-normal {
+  border: 1px solid gray;
+  background-color: #eee;
+  padding: 10px;
+  width: 100%;
+}
+
+.alert {
+  @extend %alert-normal;
+}
+.alert-normal {
+  @extend %alert-normal;
+  color: $color-fuente;
+}
+.alert-danger {
+  @extend %alert-normal;
+  color: red;
+}
+
+//operadores
+h1 {
+  font-size: 20px + 5px;
+}
+.caja {
+  width: math.div(900px, 500px) * 100%;
+}
+
+//condicionales
+h1 {
+  @if $color-fondo != #ccc {
+    color: black;
+  } @else {
+    color: lightsalmon;
+  }
+}
+
+//for
+$contador: 1;
+@for $contador from 1 through 8 {
+  .listado ul li:nth-child(#{$contador}) {
+    color: orange;
+    font-size: $contador * 10px;
+  }
+}
